@@ -10,11 +10,12 @@ This is a copy of the Public Domain [Voronoi](http://en.wikipedia.org/wiki/Voron
 The algorithm is known as [Fortune's algorithm](http://en.wikipedia.org/wiki/Fortune%27s_algorithm).
 
 This repository started as a direct copy of the original C source code.
-And in time will contain the following improvements:
+It containst the following improvements:
 * Fixes for the memory leaks.
+* SVG generator tool that can take the algorithm's output and generate an SVG file depicting the Voronoi regions.
+And in time will contain the following improvements:
 * Clipping the regions agaist a rectangle.
 * Output of polygon data, instead of just edges only.
-* SVG generator tool that can take the algorithm's output and generate an SVG file depicting the Voronoi regions.
 
 ## License
 
