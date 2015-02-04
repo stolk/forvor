@@ -18,6 +18,12 @@ geominit(void)
     deltax = xmax - xmin ;
     }
 
+void
+geomexit(void)
+    {
+    freeexit();
+    }
+
 Edge *
 bisect(Site * s1, Site * s2)
     {

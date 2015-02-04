@@ -76,6 +76,7 @@ extern Halfedge * ELleftend, * ELrightend, **ELhash ;
 
 /* geometry.c */
 void geominit(void) ;
+void geomexit(void) ;
 Edge * bisect(Site *, Site *) ;
 Site * intersect(Halfedge *, Halfedge *) ;
 int right_of(Halfedge *, Point *) ;
@@ -110,6 +111,7 @@ extern int getopt(int, char *const *, const char *);
 
 /* memory.c */
 void freeinit(Freelist *, int) ;
+void freeexit(void) ;
 char *getfree(Freelist *) ;
 void makefree(Freenode *, Freelist *) ;
 char *myalloc(unsigned) ;

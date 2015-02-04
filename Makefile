@@ -25,6 +25,9 @@ testforvor: libforvor.a $(MAINOBJ)
 testrun:
 	./testforvor < testdata/2,3-halton.points > testrun.diagram
 
+leakcheck:
+	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./testforvor < testdata/2,3-halton.points > testrun.diagram
+
 clean:
 	rm -f *.a
 	rm -f $(LIBOBJS)
