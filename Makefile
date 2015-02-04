@@ -24,6 +24,7 @@ testforvor: libforvor.a $(MAINOBJ)
 
 testrun:
 	./testforvor < testdata/2,3-halton.points > testrun.diagram
+	tools/mksvg.py < testrun.diagram > testrun.svg
 
 leakcheck:
 	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./testforvor < testdata/2,3-halton.points > testrun.diagram

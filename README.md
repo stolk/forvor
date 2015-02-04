@@ -2,6 +2,8 @@
 
 Fortune's Voronoi Generator
 
+![Voronoi diagram of 2,3-Halton](images/testrun.png "Voronoi diagram of 2,3-Halton")
+
 ## Introduction
 
 This is a copy of the Public Domain [Voronoi](http://en.wikipedia.org/wiki/Voronoi_diagram) code by [Steven Fortune](http://ect.bell-labs.com/who/sjf/).
