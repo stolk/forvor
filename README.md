@@ -13,6 +13,7 @@ This repository started as a direct copy of the original C source code.
 It containst the following improvements:
 * Fixes for the memory leaks.
 * SVG generator tool that can take the algorithm's output and generate an SVG file depicting the Voronoi regions.
+
 And in time will contain the following improvements:
 * Clipping the regions agaist a rectangle.
 * Output of polygon data, instead of just edges only.
