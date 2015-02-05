@@ -23,7 +23,7 @@ testforvor: libforvor.a $(MAINOBJ)
 	$(CC) $(MAINOBJ) -otestforvor -L. -lforvor -lm
 
 testrun:
-	tail -4 testdata/2,3-halton.points | ./testforvor > testrun.diagram
+	tail -64 testdata/2,3-halton.points | ./testforvor > testrun.diagram
 	tools/mksvg.py < testrun.diagram > testrun.svg
 	-inkscape testrun.svg
 

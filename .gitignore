@@ -27,3 +27,11 @@
 *.i*86
 *.x86_64
 *.hex
+
+# Generated files
+testrun.svg
+testrun.png
+testrun.diagram
+testforvor
+tools/fr*.*
+tools/anim.gif

@@ -44,7 +44,7 @@ out_bisector(Edge * e)
         }
     if (!triangulate && !plot && !debug)
         {
-        printf("l %f %f %f\n", e->a, e->b, e->c) ;
+        printf("l %f %f %f %d %d\n", e->a, e->b, e->c, e->reg[le]->sitenbr, e->reg[re]->sitenbr) ;
         }
     if (debug)
         {

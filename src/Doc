@@ -14,12 +14,17 @@ Each output line is a triple
 which are the indices of the three points in a Delaunay triangle. Points are
 numbered starting at 0. If this option is not present, the
 Voronoi diagram is produced.  There are four output record types.
+
 	s a b
 indicates that an input point at coordinates 
-	l a b c
+
+	l a b c s0 s1
 indicates a line with equation ax + by = c.
+It separates input points s0 (to the left) from s1 (to the right.) [Added by Bram Stolk]
+
 	v a b
 indicates a vertex at  a b.
+
 	e l v1 v2
 indicates a Voronoi segment which is a subsegment of line number l;
 with endpoints numbered v1 and v2.  If v1 or v2 is -1, the line

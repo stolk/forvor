@@ -17,7 +17,7 @@ edges = [ x.strip().split(' ')[1:] for x in lines if "e " in x ]
 edges = [ ( int(x[0]), int(x[1]), int(x[2]) ) for x in edges ]
 
 lneqs = [ x.strip().split(' ')[1:] for x in lines if "l " in x ]
-lneqs = [ ( float(x[0]), float(x[1]), float(x[2]) ) for x in lneqs ]
+lneqs = [ ( float(x[0]), float(x[1]), float(x[2]), int(x[3]), int(x[4] ) ) for x in lneqs ]
 
 pnts  = [ x.strip().split(' ')[1:] for x in lines if "s " in x ]
 pnts  = [ ( float(x[0]), float(x[1]) ) for x in pnts ]
@@ -34,6 +34,10 @@ for e in edges:
 	a = lneq[0]
 	b = lneq[1]
 	c = lneq[2]
+	s0 = lneq[3]
+	s1 = lneq[4]
+	slope = -a / b
+	print "<!-- a,b,c ", a,b,c, "slope", slope, "-->"
 	v0 = verts[ e[1] ] if e[1] != -1 else None
 	v1 = verts[ e[2] ] if e[2] != -1 else None
 	discard = False
@@ -51,13 +55,20 @@ for e in edges:
 		x = ( c - b * yhi ) / a
 		if x >= xlo and x <= xhi :
 			candidates.append( (x,yhi) )
-		v = v0 if e[2] == -1 else v1
-		dsqr = [ ( (v[0]-cand[0])*(v[0]-cand[0]) + (v[1]-cand[1])*(v[1]-cand[1]), cand ) for cand in candidates ]
-		if e[2] == -1 :
-			v1 = min( dsqr )[ 1 ]
+		assert len( candidates ) == 2
+		cand0 = candidates[0]
+		cand1 = candidates[1]
+		pt = v0 if e[2] == -1 else v1
+		cand0_largest_x = cand0[0] > cand1[0]
+		if e[1] == -1 :
+			cand0_largest_x = not cand0_largest_x
+		if cand0_largest_x :
+			v0 = pt
+			v1 = cand0
 		else:
-			v0 = min( dsqr )[ 1 ]
-		if v[0] < xlo or v[0] > xhi or v[1] < ylo or v[1] > yhi :
+			v1 = pt
+			v0 = cand1
+		if pt[0] < xlo or pt[0] > xhi or pt[1] < ylo or pt[1] > yhi :
 			discard = True
 	if not discard :
 		print "  <path d=\"M %f %f L %f %f\" stroke=\"blue\" stroke-width=\"0.08\" />" % ( s*v0[0], s*v0[1], s*v1[0], s*v1[1] )
