@@ -125,6 +125,79 @@ def clip_edges( verts, edges, lneqs, pnts ) :
 
 	return accepted_edges
 
+
+def add_border_edges( verts, edges ) :
+	newvertidx = len( verts )
+
+	btle_idx = newvertidx
+	verts.append( ( xlo, ylo ) )
+	newvertidx += 1
+
+	btri_idx = newvertidx
+	verts.append( ( xhi, ylo ) )
+	newvertidx += 1
+
+	tple_idx = newvertidx
+	verts.append( ( xlo, yhi ) )
+	newvertidx += 1
+
+	tpri_idx = newvertidx
+	verts.append( ( xhi, yhi ) )
+	newvertidx += 1
+
+	le = []
+	ri = []
+	tp = []
+	bt = []
+
+	for vidx, v in enumerate(verts) :
+		if v[0] == xlo :
+			le.append( ( v[1], v, vidx ) )
+		if v[0] == xhi :
+			ri.append( ( v[1], v, vidx ) )
+		if v[1] == ylo :
+			bt.append( ( v[0], v, vidx ) )
+		if v[1] == yhi :
+			tp.append( ( v[0], v, vidx ) )
+
+	le.sort()
+	ri.sort()
+	tp.sort()
+	bt.sort()
+
+	for i in range( len(le) - 1 ) :
+		newe = ( -1, le[i+0][2], le[i+1][2] )
+		edges.append( newe )
+
+	for i in range( len(ri) - 1 ) :
+		newe = ( -1, ri[i+0][2], ri[i+1][2] )
+		edges.append( newe )
+
+	for i in range( len(bt) - 1 ) :
+		newe = ( -1, bt[i+0][2], bt[i+1][2] )
+		edges.append( newe )
+
+	for i in range( len(tp) - 1 ) :
+		newe = ( -1, tp[i+0][2], tp[i+1][2] )
+		edges.append( newe )
+
+
+def assemble_polygons( verts, edges, lneqs, pnts ) :
+
+	numsites = len( pnts )
+	site_edges = [ [] for x in range( numsites ) ]
+
+	for e in edges :
+		lneq = lneqs[ e[0] ]
+		site_edge = ( e[1], e[2] )
+		s0 = lneq[3]
+		s1 = lneq[4]
+		site_edges[ s0 ].append( site_edge )
+		site_edges[ s1 ].append( site_edge )
+
+	#print [ len(x) for x in site_edges ]
+
+
 s = 20.0
 def output_edges_points( verts, edges, pnts ) :
 	for e in edges :
@@ -142,6 +215,10 @@ def output_edges_points( verts, edges, pnts ) :
 def output( verts, edges, lneqs, pnts ) :
 
 	edges = clip_edges( verts, edges, lneqs, pnts )
+
+	add_border_edges( verts, edges )
+
+	assemble_polygons( verts, edges, lneqs, pnts )
 
 	print\
 	'<?xml version="1.0" standalone="no"?>\n' \
