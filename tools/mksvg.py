@@ -34,8 +34,8 @@ for e in edges:
 	a = lneq[0]
 	b = lneq[1]
 	c = lneq[2]
-	v0 = verts[ e[1] ]
-	v1 = verts[ e[2] ]
+	v0 = verts[ e[1] ] if e[1] != -1 else None
+	v1 = verts[ e[2] ] if e[2] != -1 else None
 	discard = False
 	if -1 in e :
 		candidates=[]
