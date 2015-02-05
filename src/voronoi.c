@@ -35,8 +35,7 @@ voronoi(Site *(*nextsite)(void))
         if (newsite != (Site *)NULL && (PQempty()
             || newsite -> coord.y < newintstar.y
             || (newsite->coord.y == newintstar.y
-            && newsite->coord.x < newintstar.x))) {/* new site is
-smallest */
+            && newsite->coord.x < newintstar.x))) {/* new site is smallest */
             {
             out_site(newsite) ;
             }

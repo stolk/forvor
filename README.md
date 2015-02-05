@@ -1,6 +1,6 @@
 # forvor
 
-Fortune's Voronoi Generator
+Fortune's Voronoi generator
 
 ![Voronoi diagram of 2,3-Halton](images/testrun.png "Voronoi diagram of 2,3-Halton")
 
