@@ -16,7 +16,7 @@ def output_polygons( polygons, verts, s ) :
 		g = chr( int( random.uniform(65, 70) ) )
 		b = chr( int( random.uniform(65, 70) ) )
 		rgb = r+g+b
-		print '" stroke="black" fill="#%s" stroke-width="0.08" />' % ( rgb,  )
+		print 'z" stroke="black" fill="#%s" stroke-width="0.08" />' % ( rgb,  )
 
 
 def output_points( pnts, s ) :

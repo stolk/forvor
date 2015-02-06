@@ -318,7 +318,7 @@ def assemble_polygons( verts, edges, lneqs, pnts ) :
 def output_polygons( polygons ) :
 	for p in polygons:
 		print "p",
-		for vi in p :
+		for vi in p[:-1] :
 			print vi,
 		print ""
 
