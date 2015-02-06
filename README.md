@@ -12,11 +12,10 @@ The algorithm is known as [Fortune's algorithm](http://en.wikipedia.org/wiki/For
 This repository started as a direct copy of the original C source code.
 It containst the following improvements:
 * Fixes for the memory leaks.
-* SVG generator tool that can take the algorithm's output and generate an SVG file depicting the Voronoi regions.
+* Python tool that parses the voronoi diagram output, clips edges, and generates polygon. Outputs as SVG.
 
-And in time will contain the following improvements:
-* Clipping the regions agaist a rectangle.
-* Output of polygon data, instead of just edges only.
+## To do
+* Port the edge-clipping and polygon-generation from Python to C code.
 
 ## License
 
