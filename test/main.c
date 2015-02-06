@@ -125,6 +125,11 @@ readsites(void)
         if (nsites % 4000 == 0)
             sites = (Site *) realloc(sites,(nsites+4000)*sizeof(Site));
         }
+    if (nsites<2)
+        {
+        fprintf(stderr,"Error! nsites=%d\n", nsites);
+        exit(1);
+        }
 
     qsort((void *)sites, nsites, sizeof(Site), scomp) ;
     xmin = sites[0].coord.x ;
