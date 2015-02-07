@@ -204,56 +204,70 @@ def add_border_edges( verts, edges, edgemap ) :
 	tp.sort()
 	bt.sort()
 
+
 	# identify the corner sites.
-	vi0 = bt[  1 ][ 2 ]
-	vi1 = le[  1 ][ 2 ]
-	ei0 = edgemap[ vi0 ][ 0 ]
-	ei1 = edgemap[ vi1 ][ 0 ]
-	btle_site = common_site( ei0, ei1, edges )
+	btle_site = btri_site = tple_site = tpri_site = -1
 
-	vi0 = bt[ -2 ][ 2 ]
-	vi1 = ri[  1 ][ 2 ]
-	ei0 = edgemap[ vi0 ][ 0 ]
-	ei1 = edgemap[ vi1 ][ 0 ]
-	btri_site = common_site( ei0, ei1, edges )
+	if len(bt) > 2 and len(le) > 2 :
+		vi0 = bt[  1 ][ 2 ]
+		vi1 = le[  1 ][ 2 ]
+		ei0 = edgemap[ vi0 ][ 0 ]
+		ei1 = edgemap[ vi1 ][ 0 ]
+		btle_site = common_site( ei0, ei1, edges )
 
-	vi0 = tp[  1 ][ 2 ]
-	vi1 = le[ -2 ][ 2 ]
-	ei0 = edgemap[ vi0 ][ 0 ]
-	ei1 = edgemap[ vi1 ][ 0 ]
-	tple_site = common_site( ei0, ei1, edges )
+	if len(bt) > 2 and len(ri) > 2 :
+		vi0 = bt[ -2 ][ 2 ]
+		vi1 = ri[  1 ][ 2 ]
+		ei0 = edgemap[ vi0 ][ 0 ]
+		ei1 = edgemap[ vi1 ][ 0 ]
+		btri_site = common_site( ei0, ei1, edges )
 
-	vi0 = tp[ -2 ][ 2 ]
-	vi1 = ri[ -2 ][ 2 ]
-	ei0 = edgemap[ vi0 ][ 0 ]
-	ei1 = edgemap[ vi1 ][ 0 ]
-	tpri_site = common_site( ei0, ei1, edges )
+	if len(tp) > 2 and len(le) > 2 :
+		vi0 = tp[  1 ][ 2 ]
+		vi1 = le[ -2 ][ 2 ]
+		ei0 = edgemap[ vi0 ][ 0 ]
+		ei1 = edgemap[ vi1 ][ 0 ]
+		tple_site = common_site( ei0, ei1, edges )
+
+	if len(tp) > 2 and len(ri) > 2 :
+		vi0 = tp[ -2 ][ 2 ]
+		vi1 = ri[ -2 ][ 2 ]
+		ei0 = edgemap[ vi0 ][ 0 ]
+		ei1 = edgemap[ vi1 ][ 0 ]
+		tpri_site = common_site( ei0, ei1, edges )
 
 	add_border( le, edges, edgemap )
 	add_border( ri, edges, edgemap )
 	add_border( bt, edges, edgemap )
 	add_border( tp, edges, edgemap )
 
+	if btle_site == -1 or btri_site == -1 or tple_site == -1 or tpri_site == -1 :
+		sys.stderr.write( "Missing site identification for corner.\n" )
+
 	# Now add the corner edges (8 in total)
-	newe = ( -1, bt[  0 ][ 2 ], bt[  1 ][ 2 ], btle_site, -1 )
-	edges.append( newe )
-	newe = ( -1, le[  0 ][ 2 ], le[  1 ][ 2 ], btle_site, -1 )
-	edges.append( newe )
+	if btle_site > -1 :
+		newe = ( -1, bt[  0 ][ 2 ], bt[  1 ][ 2 ], btle_site, -1 )
+		edges.append( newe )
+		newe = ( -1, le[  0 ][ 2 ], le[  1 ][ 2 ], btle_site, -1 )
+		edges.append( newe )
 
-	newe = ( -1, bt[ -1 ][ 2 ], bt[ -2 ][ 2 ], btri_site, -1 )
-	edges.append( newe )
-	newe = ( -1, ri[  0 ][ 2 ], ri[  1 ][ 2 ], btri_site, -1 )
-	edges.append( newe )
+	if btri_site > -1 :
+		newe = ( -1, bt[ -1 ][ 2 ], bt[ -2 ][ 2 ], btri_site, -1 )
+		edges.append( newe )
+		newe = ( -1, ri[  0 ][ 2 ], ri[  1 ][ 2 ], btri_site, -1 )
+		edges.append( newe )
 
-	newe = ( -1, tp[  0 ][ 2 ], tp[  1 ][ 2 ], tple_site, -1 )
-	edges.append( newe )
-	newe = ( -1, le[ -1 ][ 2 ], le[ -2 ][ 2 ], tple_site, -1 )
-	edges.append( newe )
+	if tple_site > -1 :
+		newe = ( -1, tp[  0 ][ 2 ], tp[  1 ][ 2 ], tple_site, -1 )
+		edges.append( newe )
+		newe = ( -1, le[ -1 ][ 2 ], le[ -2 ][ 2 ], tple_site, -1 )
+		edges.append( newe )
 
-	newe = ( -1, tp[ -1 ][ 2 ], tp[ -2 ][ 2 ], tpri_site, -1 )
-	edges.append( newe )
-	newe = ( -1, ri[ -1 ][ 2 ], ri[ -2 ][ 2 ], tpri_site, -1 )
-	edges.append( newe )
+	if tpri_site > -1 :
+		newe = ( -1, tp[ -1 ][ 2 ], tp[ -2 ][ 2 ], tpri_site, -1 )
+		edges.append( newe )
+		newe = ( -1, ri[ -1 ][ 2 ], ri[ -2 ][ 2 ], tpri_site, -1 )
+		edges.append( newe )
 
 
 """
@@ -303,14 +317,17 @@ def assemble_polygons( verts, edges, lneqs, pnts ) :
 			nxtedge = common_vert_from_list( edgeseq[-1], edgelist )
 			assert nxtedge
 			edgeseq.append( nxtedge )
-		v0 = edgeseq[0][0]
-		v1 = edgeseq[0][1]
-		poly = [ v0, v1 ] if v1 in edgeseq[1] else [ v1, v0 ]
-		for e in edgeseq[1:] :
-			poly.append( e[0] if poly[-1] != e[0] else e[1] )
-		#sys.stderr.write( "edgeseq:" + str(edgeseq) + "\n" )
-		#sys.stderr.write( "poly:" + str(poly) + "\n" )
-		polygons.append( poly )
+		if len( edgeseq ) > 0 :
+			v0 = edgeseq[0][0]
+			v1 = edgeseq[0][1]
+			poly = [ v0, v1 ] if v1 in edgeseq[1] else [ v1, v0 ]
+			for e in edgeseq[1:] :
+				poly.append( e[0] if poly[-1] != e[0] else e[1] )
+			#sys.stderr.write( "edgeseq:" + str(edgeseq) + "\n" )
+			#sys.stderr.write( "poly:" + str(poly) + "\n" )
+			polygons.append( poly )
+		else:
+			sys.stderr.write( "edgeseq could not be determined for sitenr %d with %d edges.\n" % ( sitenr, len(site) ) )
 
 	return polygons
 
