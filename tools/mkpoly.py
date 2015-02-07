@@ -315,8 +315,10 @@ def assemble_polygons( verts, edges, lneqs, pnts ) :
 		edgeseq  = site[:1]
 		while edgelist :
 			nxtedge = common_vert_from_list( edgeseq[-1], edgelist )
-			assert nxtedge
-			edgeseq.append( nxtedge )
+			if not nxtedge:
+				edgelist=[]
+			else:
+				edgeseq.append( nxtedge )
 		if len( edgeseq ) > 0 :
 			v0 = edgeseq[0][0]
 			v1 = edgeseq[0][1]
